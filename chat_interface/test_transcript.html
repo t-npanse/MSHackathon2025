@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Transcript Functionality</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .demo-transcript {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Transcript Analysis Test</h1>
+        <p>This page tests the transcript functionality from Part B of your presentation feedback system.</p>
+        
+        <div class="demo-transcript">
+            <h3>Sample Transcript:</h3>
+            <textarea id="sampleTranscript" readonly>
+Hello everyone, and welcome to today's presentation on, um, artificial intelligence in the workplace. 
+
+I'm really excited to share with you some of the, uh, amazing developments we've been working on. So, let's start with the basics. 
+
+Artificial intelligence, or AI as we commonly call it, is transforming how we work, how we communicate, and how we solve problems. 
+
+In our research, we found that, um, companies using AI tools see a 40% increase in productivity. That's, that's really significant when you think about it.
+
+So, what does this mean for our team? Well, it means we need to, uh, adapt and learn these new technologies. We can't just ignore them and hope they go away.
+
+In conclusion, I believe that embracing AI will, um, will help us stay competitive and, and create better solutions for our clients. Thank you for your attention, and I'm happy to take any questions.
+            </textarea>
+        </div>
+
+        <button onclick="testTranscriptAnalysis()">🚀 Test Transcript Analysis</button>
+        <button onclick="openEnhancedUI()">🎯 Open Enhanced UI</button>
+
+        <div id="results" style="margin-top: 30px; display: none;">
+            <h3>Analysis Results:</h3>
+            <div id="analysisOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        function testTranscriptAnalysis() {
+            const transcript = document.getElementById('sampleTranscript').value;
+            
+            // Simulate Part B analysis
+            const mockResults = {
+                speech_metrics: {
+                    overall_quality: 72,
+                    speaking_pace: 125,
+                    tone_variety: 68,
+                    clarity_score: 78
+                },
+                speech_patterns: {
+                    filler_count: 12,
+                    pause_analysis: 'Good strategic pauses, some hesitation',
+                    repetition_count: 5
+                },
+                content_structure: {
+                    transition_quality: 'Good',
+                    key_points_count: 4,
+                    conclusion_strength: 'Clear and actionable'
+                },
+                recommendations: [
+                    {
+                        category: 'Filler Words',
+                        suggestion: 'Reduce "um" and "uh" usage - try pausing instead',
+                        priority: 'high',
+                        score_impact: '+8 points in professionalism'
+                    },
+                    {
+                        category: 'Confidence',
+                        suggestion: 'Content is strong! Practice delivery to reduce hesitation',
+                        priority: 'medium',
+                        score_impact: '+5 points in engagement'
+                    },
+                    {
+                        category: 'Structure',
+                        suggestion: 'Excellent introduction and conclusion structure',
+                        priority: 'celebration',
+                        score_impact: 'Maintain this strength'
+                    }
+                ]
+            };
+
+            // Display results
+            const resultsDiv = document.getElementById('results');
+            const outputDiv = document.getElementById('analysisOutput');
+            
+            outputDiv.innerHTML = `
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin: 10px 0;">
+                    <h4>🎯 Speech Quality Metrics</h4>
+                    <p><strong>Overall Quality:</strong> ${mockResults.speech_metrics.overall_quality}/100</p>
+                    <p><strong>Speaking Pace:</strong> ${mockResults.speech_metrics.speaking_pace} WPM</p>
+                    <p><strong>Tone Variety:</strong> ${mockResults.speech_metrics.tone_variety}/100</p>
+                    <p><strong>Clarity Score:</strong> ${mockResults.speech_metrics.clarity_score}/100</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin: 10px 0;">
+                    <h4>💬 Speech Patterns</h4>
+                    <p><strong>Filler Words:</strong> ${mockResults.speech_patterns.filler_count} occurrences</p>
+                    <p><strong>Pause Analysis:</strong> ${mockResults.speech_patterns.pause_analysis}</p>
+                    <p><strong>Repetitions:</strong> ${mockResults.speech_patterns.repetition_count} instances</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin: 10px 0;">
+                    <h4>📈 Content Structure</h4>
+                    <p><strong>Transitions:</strong> ${mockResults.content_structure.transition_quality}</p>
+                    <p><strong>Key Points:</strong> ${mockResults.content_structure.key_points_count} identified</p>
+                    <p><strong>Conclusion:</strong> ${mockResults.content_structure.conclusion_strength}</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin: 10px 0;">
+                    <h4>💡 Recommendations</h4>
+                    ${mockResults.recommendations.map(rec => `
+                        <div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                            <strong>${rec.category}:</strong> ${rec.suggestion}<br>
+                            <small style="color: #ffc107;"><strong>Impact:</strong> ${rec.score_impact}</small>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            resultsDiv.style.display = 'block';
+            alert('✅ Transcript analysis complete! This shows what Part B would return.');
+        }
+
+        function openEnhancedUI() {
+            alert('Opening enhanced UI - click the "📝 Transcript Analysis" tab to test the integrated functionality!');
+            window.open('enhanced_index.html', '_blank');
+        }
+    </script>
+</body>
+</html>
