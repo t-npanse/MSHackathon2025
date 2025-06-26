@@ -1,0 +1,203 @@
+{
+  "facial_analysis": {
+    "dominant_emotions": [
+      {
+        "emotion": "confidence",
+        "confidence": 0.85,
+        "duration_percentage": 45.2
+      },
+      {
+        "emotion": "neutral",
+        "confidence": 0.72,
+        "duration_percentage": 38.1
+      },
+      {
+        "emotion": "joy",
+        "confidence": 0.68,
+        "duration_percentage": 16.7
+      }
+    ],
+    "emotion_timeline": [
+      {
+        "timestamp": "00:00:10",
+        "emotion": "neutral",
+        "confidence": 0.8,
+        "context": "presentation_opening"
+      },
+      {
+        "timestamp": "00:00:45",
+        "emotion": "confidence",
+        "confidence": 0.9,
+        "context": "introducing_main_topic"
+      },
+      {
+        "timestamp": "00:02:30",
+        "emotion": "confidence",
+        "confidence": 0.95,
+        "context": "explaining_key_concept"
+      },
+      {
+        "timestamp": "00:05:15",
+        "emotion": "joy",
+        "confidence": 0.85,
+        "context": "audience_engagement"
+      },
+      {
+        "timestamp": "00:07:20",
+        "emotion": "confidence",
+        "confidence": 0.88,
+        "context": "presentation_closing"
+      }
+    ],
+    "emotion_consistency": {
+      "variability_score": 0.65,
+      "most_stable_emotion": "confidence",
+      "emotion_transitions": [
+        {
+          "from": "neutral",
+          "to": "confidence", 
+          "timestamp": "00:00:45",
+          "smoothness": 0.8
+        },
+        {
+          "from": "confidence",
+          "to": "joy",
+          "timestamp": "00:05:15", 
+          "smoothness": 0.9
+        }
+      ]
+    },
+    "facial_expressions": {
+      "smile_percentage": 35.2,
+      "neutral_percentage": 48.1,
+      "engaged_percentage": 78.4,
+      "eye_contact_percentage": 82.5
+    }
+  },
+  "visual_sentiment": {
+    "overall_tone": "positive",
+    "confidence_indicators": [
+      "Maintained strong eye contact throughout",
+      "Appropriate facial expressions matching content",
+      "Consistent professional presence",
+      "High confidence levels during key explanations"
+    ],
+    "energy_level": "medium-high",
+    "emotional_patterns": {
+      "opening_confidence": 0.8,
+      "mid_presentation_energy": 0.9,
+      "closing_impact": 0.88,
+      "stress_indicators": [],
+      "engagement_peaks": [
+        {
+          "timestamp": "00:02:30",
+          "emotion": "confidence",
+          "confidence": 0.95
+        },
+        {
+          "timestamp": "00:05:15", 
+          "emotion": "joy",
+          "confidence": 0.85
+        }
+      ],
+      "emotional_arc": "consistently_strong"
+    }
+  },
+  "presentation_quality": {
+    "visual_engagement": 87,
+    "professional_appearance": true,
+    "consistency": "excellent",
+    "body_language": {
+      "posture_score": 85,
+      "gesture_effectiveness": 78,
+      "eye_contact_rating": 90
+    },
+    "delivery_effectiveness": {
+      "authenticity_score": 88,
+      "charisma_indicators": [
+        "Natural smile timing",
+        "Confident vocal delivery alignment",
+        "Appropriate gesture coordination"
+      ],
+      "audience_connection": 85
+    }
+  },
+  "coaching_insights": {
+    "speaker_archetype": "confident_professional",
+    "communication_strengths": [
+      "Strong eye contact creates connection",
+      "Confident demeanor builds credibility", 
+      "Professional appearance enhances message",
+      "Emotional consistency maintains engagement"
+    ],
+    "growth_opportunities": [
+      "Increase smile frequency during lighter content",
+      "Add more dynamic gestures for emphasis",
+      "Vary emotional expression to match content tone",
+      "Practice pausing for emphasis during key points"
+    ],
+    "recommended_techniques": [
+      "Mirror practice for expression variety",
+      "Video recording for self-awareness",
+      "Gesture mapping to content",
+      "Energy calibration exercises"
+    ]
+  },
+  "recommendations": [
+    {
+      "category": "excellence",
+      "suggestion": "Outstanding visual engagement! You demonstrate strong professional presence and confidence. Consider developing advanced presentation techniques to reach expert level.",
+      "priority": "celebration",
+      "score_impact": "Maintain this excellence",
+      "coaching_depth": "advanced",
+      "next_steps": [
+        "Record yourself for self-analysis",
+        "Seek speaking opportunities at conferences", 
+        "Develop signature presentation style",
+        "Consider mentoring other presenters"
+      ]
+    },
+    {
+      "category": "expression_variety",
+      "suggestion": "Your confidence shines through consistently. To reach the next level, experiment with more varied facial expressions that match your content's emotional tone.",
+      "priority": "medium",
+      "score_impact": "Could elevate score to 90+",
+      "coaching_depth": "intermediate",
+      "next_steps": [
+        "Practice with mirror for expression variety",
+        "Map emotions to content sections",
+        "Record practice sessions for feedback",
+        "Work on micro-expression timing"
+      ]
+    },
+    {
+      "category": "engagement_enhancement",
+      "suggestion": "Your eye contact is excellent at 82.5%. To maximize audience connection, vary your gaze pattern to include different 'audience members' when presenting virtually.",
+      "priority": "low",
+      "score_impact": "Fine-tuning for excellence",
+      "coaching_depth": "advanced",
+      "next_steps": [
+        "Practice gaze shifting techniques",
+        "Use camera positioning for natural eye contact", 
+        "Develop audience connection exercises",
+        "Master virtual presentation eye contact"
+      ]
+    }
+  ],
+  "summary": {
+    "overall_score": 87,
+    "confidence_level": "high",
+    "key_strengths": [
+      "Exceptional eye contact (82.5%)",
+      "Consistent confidence throughout",
+      "Professional appearance and demeanor", 
+      "Strong opening and closing presence"
+    ],
+    "priority_improvements": [
+      "Increase expression variety",
+      "Add more dynamic gestures",
+      "Experiment with emotional range"
+    ],
+    "coaching_recommendation": "You're an advanced presenter ready for expert-level techniques. Focus on nuanced expression control and advanced audience connection strategies."
+  }
+}
