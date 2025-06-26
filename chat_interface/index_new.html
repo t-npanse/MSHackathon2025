@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Presentation Feedback - Video Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .chat-container {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 5px;
+        }
+
+        .input-section {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        #videoUrl {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        #videoUrl:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #analyzeBtn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #analyzeBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        #analyzeBtn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .example-urls {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .example-urls a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .example-urls a:hover {
+            text-decoration: underline;
+        }
+
+        .insights-card {
+            background: #f8f9ff;
+            border: 1px solid #e0e6ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .insights-header {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px solid #e0e6ff;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #666;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .recommendations {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .recommendations h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .recommendations ul {
+            margin-left: 20px;
+        }
+
+        .recommendations li {
+            color: #856404;
+            margin-bottom: 5px;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            border: 1px solid #ffcccc;
+            color: #cc0000;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 AI Presentation Feedback</h1>
+            <p>Upload your video and get instant AI-powered presentation insights</p>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="message bot">
+                <div class="message-content">
+                    <p>👋 Welcome! I'm your AI presentation coach.</p>
+                    <p>Paste a video URL below and I'll analyze facial expressions, engagement levels, and provide feedback to improve your presentation skills.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <input type="url" 
+                       id="videoUrl" 
+                       placeholder="Enter video URL (e.g., Teams recording, YouTube, etc.)"
+                       required>
+                <button id="analyzeBtn" onclick="analyzeVideo()">
+                    🔍 Analyze Video
+                </button>
+            </div>
+            
+            <div class="example-urls">
+                <strong>Try these examples:</strong>
+                <a href="#" onclick="useExampleUrl('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4')">Sample Video 1</a>
+                <a href="#" onclick="useExampleUrl('https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_5mb.mp4')">Sample Video 2</a>
+            </div>
+
+            <div class="loading" id="loadingIndicator">
+                <div class="loading-spinner"></div>
+                <p>Analyzing your video... This may take 30-60 seconds</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let analysisInProgress = false;
+
+        function addMessage(content, isUser = false) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = content;
+            
+            messageDiv.appendChild(contentDiv);
+            chatContainer.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function useExampleUrl(url) {
+            document.getElementById('videoUrl').value = url;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+            document.getElementById('analyzeBtn').disabled = show;
+            analysisInProgress = show;
+        }
+
+        async function analyzeVideo() {
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            
+            if (!videoUrl) {
+                alert('Please enter a video URL');
+                return;
+            }
+
+            if (analysisInProgress) {
+                return;
+            }
+
+            // Add user message
+            addMessage(`🎬 Analyzing video: <br><small>${videoUrl}</small>`, true);
+
+            showLoading(true);
+
+            try {
+                // For demo purposes, use local analysis
+                const result = await simulateVideoAnalysis(videoUrl);
+                
+                if (result.success) {
+                    displayAnalysisResults(result);
+                } else {
+                    displayError(result.error || 'Analysis failed');
+                }
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+                displayError('Unable to analyze video. Please check the URL and try again.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function simulateVideoAnalysis(videoUrl) {
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            
+            // Mock analysis results based on URL
+            if (videoUrl.includes('BigBuckBunny')) {
+                return {
+                    success: true,
+                    total_faces_detected: 0,
+                    frames_analyzed: 10,
+                    insights: {
+                        engagement_level: "Unable to determine",
+                        average_smile_score: "N/A",
+                        video_quality: "High",
+                        recommendations: [
+                            "No human faces detected - this appears to be an animated video",
+                            "For presentation analysis, use videos with clear human faces",
+                            "Ensure good lighting and camera positioning for best results"
+                        ]
+                    }
+                };
+            } else {
+                return {
+                    success: true,
+                    total_faces_detected: 5,
+                    frames_analyzed: 10,
+                    insights: {
+                        engagement_level: "High",
+                        average_smile_score: 0.78,
+                        video_quality: "High",
+                        recommendations: [
+                            "Excellent engagement levels detected!",
+                            "Great use of facial expressions throughout the presentation",
+                            "Maintain consistent eye contact with the camera",
+                            "Consider adding more hand gestures for emphasis"
+                        ]
+                    }
+                };
+            }
+        }
+
+        function displayAnalysisResults(result) {
+            const insights = result.insights || {};
+            
+            let html = `
+                <div class="insights-card">
+                    <div class="insights-header">
+                        📊 Video Analysis Results
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">🎭 Faces Detected:</span>
+                        <span class="metric-value">${result.total_faces_detected || 0}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">📸 Frames Analyzed:</span>
+                        <span class="metric-value">${result.frames_analyzed || 0}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">📈 Engagement Level:</span>
+                        <span class="metric-value">${insights.engagement_level || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">😊 Smile Score:</span>
+                        <span class="metric-value">${typeof insights.average_smile_score === 'number' ? (insights.average_smile_score * 100).toFixed(0) + '%' : insights.average_smile_score}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">🎯 Video Quality:</span>
+                        <span class="metric-value">${insights.video_quality || 'N/A'}</span>
+                    </div>
+                </div>
+            `;
+
+            if (insights.recommendations && insights.recommendations.length > 0) {
+                html += `
+                    <div class="recommendations">
+                        <h4>💡 Recommendations:</h4>
+                        <ul>
+                            ${insights.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            addMessage(html);
+            
+            // Generate AI feedback
+            generateAIFeedback(result);
+        }
+
+        async function generateAIFeedback(analysisResult) {
+            addMessage("🤖 Generating personalized feedback report...");
+
+            // Simulate AI processing
+            setTimeout(() => {
+                const feedback = generateFeedbackText(analysisResult);
+                addMessage(feedback);
+            }, 2000);
+        }
+
+        function generateFeedbackText(result) {
+            const insights = result.insights || {};
+            const engagementLevel = insights.engagement_level || 'Medium';
+            const smileScore = insights.average_smile_score || 0.5;
+            const facesDetected = result.total_faces_detected || 0;
+
+            let feedback = `
+                <div style="line-height: 1.6;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">🎯 Your Presentation Feedback Report</h3>
+                    
+                    <p><strong>Overall Assessment:</strong> Based on the video analysis, your presentation shows ${engagementLevel.toLowerCase()} engagement levels.</p>
+            `;
+
+            if (facesDetected > 0) {
+                feedback += `
+                    <p><strong>Facial Expression Analysis:</strong> 
+                    ${typeof smileScore === 'number' && smileScore > 0.7 ? "Excellent! Your positive facial expressions show high engagement and confidence." : 
+                      typeof smileScore === 'number' && smileScore > 0.4 ? "Good expressiveness detected. Consider adding more varied expressions to maintain audience interest." :
+                      "Your presentation could benefit from more animated facial expressions and smiles."}
+                    </p>
+                `;
+            } else {
+                feedback += `
+                    <p><strong>Visibility:</strong> No faces were clearly detected in the video. This could indicate:</p>
+                    <ul>
+                        <li>Poor lighting or video quality</li>
+                        <li>Distance from camera</li>
+                        <li>Camera angle issues</li>
+                        <li>Animated or non-human content</li>
+                    </ul>
+                `;
+            }
+
+            feedback += `
+                <p><strong>Key Strengths:</strong></p>
+                <ul>
+                    <li>Video quality is sufficient for analysis</li>
+                    <li>Technical setup appears professional</li>
+                </ul>
+
+                <p><strong>Areas for Improvement:</strong></p>
+                <ul>
+                    <li>Ensure you're clearly visible in the frame</li>
+                    <li>Maintain good lighting on your face</li>
+                    <li>Practice varied facial expressions</li>
+                    <li>Keep consistent eye contact with the camera</li>
+                </ul>
+
+                <p><strong>Next Steps:</strong> Practice with these insights and re-record to see your improvement!</p>
+                </div>
+            `;
+
+            return feedback;
+        }
+
+        function displayError(errorMessage) {
+            const html = `
+                <div class="error-message">
+                    <strong>⚠️ Analysis Failed</strong><br>
+                    ${errorMessage}
+                    <br><br>
+                    <small>Please check your video URL and try again. Supported formats: MP4, AVI, MOV</small>
+                </div>
+            `;
+            addMessage(html);
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('videoUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !analysisInProgress) {
+                analyzeVideo();
+            }
+        });
+    </script>
+</body>
+</html>

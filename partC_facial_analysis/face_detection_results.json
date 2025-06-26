@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "insights": {
+    "summary": "No faces detected in video",
+    "engagement_level": "Unable to determine",
+    "confidence_indicators": [],
+    "recommendations": [
+      "Ensure presenter is clearly visible in frame",
+      "Check video quality and lighting"
+    ]
+  },
+  "frame_analyses": [
+    {
+      "frame_number": 1,
+      "timestamp": "0.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 2,
+      "timestamp": "2.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 3,
+      "timestamp": "4.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 4,
+      "timestamp": "6.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 5,
+      "timestamp": "8.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 6,
+      "timestamp": "10.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 7,
+      "timestamp": "12.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 8,
+      "timestamp": "14.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 9,
+      "timestamp": "16.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    },
+    {
+      "frame_number": 10,
+      "timestamp": "18.0s",
+      "face_detection_success": false,
+      "face_count": 0,
+      "faces": []
+    }
+  ],
+  "total_faces_detected": 0,
+  "frames_analyzed": 10
+}
