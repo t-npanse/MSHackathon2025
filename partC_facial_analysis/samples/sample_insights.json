@@ -1,0 +1,83 @@
+{
+  "facial_analysis": {
+    "dominant_emotions": [
+      {
+        "emotion": "confidence",
+        "confidence": 0.85
+      },
+      {
+        "emotion": "neutral",
+        "confidence": 0.72
+      },
+      {
+        "emotion": "joy",
+        "confidence": 0.45
+      }
+    ],
+    "emotion_timeline": [
+      {
+        "timestamp": "00:00:10",
+        "emotion": "neutral",
+        "confidence": 0.8
+      },
+      {
+        "timestamp": "00:02:30",
+        "emotion": "confidence",
+        "confidence": 0.9
+      },
+      {
+        "timestamp": "00:05:15",
+        "emotion": "joy",
+        "confidence": 0.7
+      }
+    ],
+    "facial_expressions": {
+      "smile_percentage": 35.2,
+      "neutral_percentage": 58.8,
+      "engaged_percentage": 78.4
+    },
+    "eye_contact": {
+      "looking_at_camera": 82.5,
+      "engagement_score": 85.0
+    }
+  },
+  "visual_sentiment": {
+    "overall_tone": "positive",
+    "confidence_indicators": [
+      "Maintained good eye contact",
+      "Appropriate facial expressions",
+      "Consistent presence in frame"
+    ],
+    "energy_level": "medium-high"
+  },
+  "presentation_quality": {
+    "visual_engagement": 85,
+    "professional_appearance": true,
+    "distracting_elements": [],
+    "presenter_visibility": 95
+  },
+  "recommendations": [
+    {
+      "category": "facial_expression",
+      "suggestion": "Great job maintaining eye contact! Consider smiling a bit more during key points to enhance engagement.",
+      "priority": "low"
+    },
+    {
+      "category": "engagement",
+      "suggestion": "Your visual presence is strong. Keep up the consistent energy throughout the presentation.",
+      "priority": "low"
+    }
+  ],
+  "summary": {
+    "overall_score": 8.5,
+    "strengths": [
+      "Strong eye contact",
+      "Professional appearance",
+      "Confident demeanor"
+    ],
+    "areas_for_improvement": [
+      "Increase smile frequency",
+      "Vary facial expressions more"
+    ]
+  }
+}

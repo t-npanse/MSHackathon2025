@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "type": "string",
+      "defaultValue": "presentation-feedback-project"
+    },
+    "hubName": {
+      "type": "string",
+      "defaultValue": "your-hub-name"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.MachineLearningServices/workspaces",
+      "apiVersion": "2023-10-01",
+      "name": "[parameters('projectName')]",
+      "location": "westus",
+      "properties": {
+        "friendlyName": "Presentation Feedback Chat App",
+        "description": "AI-powered presentation feedback interface",
+        "hubResourceId": "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('hubName'))]"
+      }
+    },
+    {
+      "type": "Microsoft.MachineLearningServices/workspaces/deployments",
+      "apiVersion": "2023-10-01",
+      "name": "[concat(parameters('projectName'), '/chat-app')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.MachineLearningServices/workspaces', parameters('projectName'))]"
+      ],
+      "properties": {
+        "deploymentType": "WebApp",
+        "codeConfiguration": {
+          "codeUri": "./chat_interface"
+        }
+      }
+    }
+  ]
+}
